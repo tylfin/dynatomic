@@ -1,0 +1,16 @@
+version: '3'
+services:
+  dynatomic:
+    build: .
+    command: bash -c "go test -coverprofile=coverage.txt -covermode=atomic -timeout 60s -race -cover -p 1 ./pkg/..."
+    volumes:
+      - ".:/go/src/github.com/tylfin/dynatomic"
+    environment:
+      DOCKER_COMPOSE: 'true'
+      AWS_ACCESS_KEY_ID: 'fake'
+      AWS_SECRET_ACCESS_KEY: 'fake'
+    links:
+      - dynamodb:dynamodb
+  dynamodb:
+    image: dwmkerr/dynamodb
+    command: "-sharedDb -inMemory"
