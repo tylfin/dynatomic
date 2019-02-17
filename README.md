@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/tylfin/dynatomic.svg?branch=master)](https://travis-ci.org/tylfin/dynatomic)
 [![Build status](https://ci.appveyor.com/api/projects/status/g58owqmdpumqsmxq/branch/master?svg=true&passingText=Windows%20-%20OK)](https://ci.appveyor.com/project/tylfin/dynatomic/branch/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tylfin/dynatomic)](https://goreportcard.com/report/github.com/tylfin/dynatomic)
+[![GoDoc](https://godoc.org/github.com/tylfin/dynatomic/pkg/dynatomic?status.svg)](https://godoc.org/github.com/tylfin/dynatomic/pkg/dynatomic)
 
 Dynatomic is a library for using dynamodb as an atomic counter
 
