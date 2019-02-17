@@ -1,4 +1,4 @@
-FROM golang:1.11.4
+FROM golang:1.11.5
 ENV GODEBUG netdns=cgo
 
 ADD . /go/src/github.com/tylfin/dynatomic
