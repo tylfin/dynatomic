@@ -43,6 +43,7 @@ func TestNew(t *testing.T) {
 	assert.NotNil(t, dynatomic.done)
 	time.Sleep(time.Second * 2)
 	dynatomic.Done()
+	dynatomic.Done()
 
 	// Ensure the done channel is closed
 	v, ok := <-dynatomic.done
@@ -74,7 +75,7 @@ func TestBulkInsert(t *testing.T) {
 		return nil, nil
 	}
 
-	dynatomic := New(10, 10*time.Millisecond, nil, errHandler)
+	dynatomic := New(10, 20*time.Millisecond, nil, errHandler)
 	dynatomic.RowChan <- &types.Row{Schema: &types.Schema{TableName: aws.String("fakeTable")}, Incr: aws.String("5")}
 
 	time.Sleep(300 * time.Millisecond)
@@ -86,4 +87,5 @@ func TestBulkInsert(t *testing.T) {
 
 	time.Sleep(300 * time.Millisecond)
 	assert.Equal(t, *lastRow.Incr, "10")
+	dynatomic.Done()
 }

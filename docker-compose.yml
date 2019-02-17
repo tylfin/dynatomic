@@ -2,7 +2,7 @@ version: '3'
 services:
   dynatomic:
     build: .
-    command: bash -c "go test -coverprofile=coverage.txt -covermode=atomic -timeout 60s -race -cover -p 1 ./pkg/..."
+    command: bash -c "go test -coverprofile=coverage.txt -covermode=atomic -timeout 60s -cover -p 1 ./pkg/..."
     volumes:
       - ".:/go/src/github.com/tylfin/dynatomic"
     environment:
