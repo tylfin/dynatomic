@@ -9,7 +9,7 @@ import (
 	"github.com/tylfin/dynatomic/pkg/types"
 )
 
-// CreateTable creates dynamoDB table, this will be used for testing purposes
+// CreateTable creates a dynamoDB table
 func CreateTable(svc *dynamodb.DynamoDB, schema *types.Schema) error {
 	input := &dynamodb.CreateTableInput{
 		AttributeDefinitions: []*dynamodb.AttributeDefinition{

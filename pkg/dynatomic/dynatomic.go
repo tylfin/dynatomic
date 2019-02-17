@@ -1,6 +1,23 @@
 // Package dynatomic provides a convenient wrapper API around
 // using DynamoDB as highly available, concurrent, and performant
-// asynchronous atomic counter.
+// asynchronous atomic counter
+//
+// Basic usage:
+//  // Initial dynatomic with a batch size of 100, a wait time of a second, your AWS config
+//  // and a function that will notify the user of internal errors
+//  d := New(100, time.Second, config, errHandler)
+//  d.RowChan <- &types.Row{...}
+//  d.RowChan <- &types.Row{...}
+//  d.RowChan <- &types.Row{...}
+//  ...
+//  d.Done()
+// Dynamo will update accordingly
+// For example if you write the rows:
+// 	Table: MyTable, Key: A, Range: A, Incr: 5
+// 	Table: MyTable, Key: A, Range: A, Incr: 5
+// 	Table: MyTable, Key: A, Range: A, Incr: 5
+// 	Table: MyTable, Key: A, Range: A, Incr: 5
+// Then MyTable Key A, Range A will now show a value of 20
 package dynatomic
 
 import (
@@ -33,7 +50,7 @@ type Dynatomic struct {
 	WaitTime  time.Duration
 }
 
-// New creates a new dynatomic struct ready to receive inserts
+// New creates a dynatomic struct listening to the RowChan for writes
 func New(batchSize int, waitTime time.Duration, config *aws.Config, errHandler func(loc string, err error)) *Dynatomic {
 	dynatomic := &Dynatomic{}
 

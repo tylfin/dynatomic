@@ -1,6 +1,9 @@
-// Package dynamo wraps AWS DynamoDB service.
-// Example usage inserting a row:
-//  svc, err := dynamo.New(conf)
+// Package dynamo wraps the AWS DynamoDB SDK
+//
+// To insert a row:
+//  svc, _ := dynamo.New(conf)
+//  row := &types.Row{...}
+//  count, err := dynamo.Insert(svc, row)
 package dynamo
 
 import (
@@ -36,7 +39,11 @@ func New(config *aws.Config) (*dynamodb.DynamoDB, error) {
 	return db, nil
 }
 
-// Insert stores a send in the dsf table
+// Insert takes in a row, and increments the atomic key value by row.Incr using the query:
+// 	SET [ATOMIC KEY] = IF_NOT_EXISTS(VALUE, 0) + VALUE
+// This will row lock and can create hotspots if used on the same key too often,
+// for high volume writes on a single key use the dynatomic async wrapper for an
+// eventually consistent result
 func Insert(svc *dynamodb.DynamoDB, row *types.Row) (*int64, error) {
 	// Avoid an off-by-one error by using the if_not_exists to create a new row if it doesn't exist
 	updateExpr := fmt.Sprintf("SET %s = if_not_exists(%s, :zero) + :incr", *row.Schema.AtomicKey, *row.Schema.AtomicKey)

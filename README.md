@@ -3,16 +3,50 @@
 [![Build Status](https://travis-ci.org/tylfin/dynatomic.svg?branch=master)](https://travis-ci.org/tylfin/dynatomic)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tylfin/dynatomic)](https://goreportcard.com/report/github.com/tylfin/dynatomic)
 
-Dynatomic is a library for using dynamodb as a highly concurrent, atomic counter
+Dynatomic is a library for using dynamodb as an atomic counter
 
 - [Dynatomic](#dynatomic)
+  - [Motivation](#motivation)
   - [Usage](#usage)
   - [Development](#development)
   - [Contributing](#contributing)
 
+## Motivation
+
+The dynatomic was written to use dynamodb as a quick and easy atomic counter.
+
+The package tries to serve two unique use cases:
+
+- Unique, fast real-time writes, e.g. user visits to a page or rate limiting
+- Large number of asynchronous writes that need to be eventually consistent, e.g. API usage by a client for billing
+
 ## Usage
 
-This project is still in development. Working API to come soon!
+Basic usage:
+
+```bash
+// Initial dynatomic with a batch size of 100, a wait time of a second, your AWS config
+// and a function that will notify the user of internal errors
+d := New(100, time.Second, config, errHandler)
+d.RowChan <- &types.Row{...}
+d.RowChan <- &types.Row{...}
+d.RowChan <- &types.Row{...}
+...
+d.Done()
+```
+
+Dynamo will update accordingly.
+
+For example if you write the rows:
+
+```bash
+Table: MyTable, Key: A, Range: A, Incr: 5
+Table: MyTable, Key: A, Range: A, Incr: 5
+Table: MyTable, Key: A, Range: A, Incr: 5
+Table: MyTable, Key: A, Range: A, Incr: 5
+```
+
+Then MyTable Key A, Range A will now show a value of 20
 
 ## Development
 
