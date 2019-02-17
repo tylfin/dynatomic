@@ -71,7 +71,7 @@ func TestIncrement(t *testing.T) {
 
 	// Foobar should not be used as a valid increment
 	row.Incr = aws.String("foobar")
-	c, err = dynamo.Insert(svc, row)
+	_, err = dynamo.Insert(svc, row)
 	assert.NotNil(t, err)
 	if awsErr, ok := err.(awserr.Error); ok {
 		assert.Equal(t, "ValidationException", awsErr.Code())

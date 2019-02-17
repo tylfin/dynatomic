@@ -1,5 +1,8 @@
 # Dynatomic
 
+[![Build Status](https://travis-ci.org/tylfin/dynatomic.svg?branch=master)](https://travis-ci.org/tylfin/dynatomic)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tylfin/dynatomic)](https://goreportcard.com/report/github.com/tylfin/dynatomic)
+
 Dynatomic is a library for using dynamodb as a highly concurrent, atomic counter
 
 - [Dynatomic](#dynatomic)
