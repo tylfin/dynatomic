@@ -48,6 +48,9 @@ func setup() (func(), *dynamodb.DynamoDB) {
 }
 
 func TestIncrement(t *testing.T) {
+	if testing.Short() {
+		t.Skip()
+	}
 	teardown, svc := setup()
 	defer teardown()
 
