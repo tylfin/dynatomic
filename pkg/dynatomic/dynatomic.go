@@ -3,8 +3,9 @@
 // asynchronous atomic counter
 //
 // Basic usage:
-//  // Initial dynatomic with a batch size of 100, a wait time of a second, your AWS config
-//  // and a function that will notify the user of internal errors
+//  // Initialize the dynatomic backround goroutine with a batch size of 100,
+//  // a wait time of a second, your AWS config and a function that will
+//  // notify the user of internal errors
 //  d := New(100, time.Second, config, errHandler)
 //  d.RowChan <- &types.Row{...}
 //  d.RowChan <- &types.Row{...}
