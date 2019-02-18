@@ -6,6 +6,7 @@
 [![GoDoc](https://godoc.org/github.com/tylfin/dynatomic/pkg/dynatomic?status.svg)](https://godoc.org/github.com/tylfin/dynatomic/pkg/dynatomic)
 [![Coverage Status](https://coveralls.io/repos/github/tylfin/dynatomic/badge.svg)](https://coveralls.io/github/tylfin/dynatomic)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![CodeFactor](https://www.codefactor.io/repository/github/tylfin/dynatomic/badge)](https://www.codefactor.io/repository/github/tylfin/dynatomic)
 
 Dynatomic is a library for using dynamodb as an atomic counter
 
