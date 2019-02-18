@@ -50,13 +50,13 @@ func Insert(svc *dynamodb.DynamoDB, row *types.Row) (*int64, error) {
 
 	input := &dynamodb.UpdateItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
-			*row.Schema.HashKey:  &dynamodb.AttributeValue{S: row.HashValue},
-			*row.Schema.RangeKey: &dynamodb.AttributeValue{S: row.RangeValue},
+			*row.Schema.HashKey:  {S: row.HashValue},
+			*row.Schema.RangeKey: {S: row.RangeValue},
 		},
 		UpdateExpression: aws.String(updateExpr),
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":incr": &dynamodb.AttributeValue{N: row.Incr},
-			":zero": &dynamodb.AttributeValue{N: aws.String("0")},
+			":incr": {N: row.Incr},
+			":zero": {N: aws.String("0")},
 		},
 		TableName:    row.Schema.TableName,
 		ReturnValues: aws.String("UPDATED_NEW"),
