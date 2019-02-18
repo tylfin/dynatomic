@@ -4,7 +4,9 @@ services:
   - docker
 
 before_install:
+- go get github.com/mattn/goveralls
 - docker-compose build dynatomic
 
 script:
 - docker-compose run dynatomic
+- goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
