@@ -105,7 +105,7 @@ func (d *Dynatomic) batch() bool {
 			return true
 		case row := <-d.RowChan:
 			group[*row.Schema.TableName] = append(group[*row.Schema.TableName], row)
-		case <-time.Tick(d.WaitTime):
+		case <-time.After(d.WaitTime):
 			continue
 		}
 	}
