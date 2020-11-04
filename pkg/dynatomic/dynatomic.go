@@ -99,15 +99,17 @@ func (d *Dynatomic) batch() bool {
 	group := map[string][]*types.Row{}
 
 	for i := 0; i < d.BatchSize; i++ {
+		t := time.NewTimer(d.WaitTime)
 		select {
 		case <-d.done:
+			t.Stop()
 			d.write(group)
 			return true
 		case row := <-d.RowChan:
 			group[*row.Schema.TableName] = append(group[*row.Schema.TableName], row)
-		case <-time.After(d.WaitTime):
-			continue
+		case <-t.C:
 		}
+		t.Stop()
 	}
 
 	d.write(group)
